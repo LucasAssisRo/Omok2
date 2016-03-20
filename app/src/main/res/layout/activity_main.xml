@@ -18,7 +18,8 @@
         android:layout_alignLeft="@+id/buttonTwoPlayers"
         android:layout_alignStart="@+id/buttonTwoPlayers"
         android:layout_alignRight="@+id/buttonTwoPlayers"
-        android:layout_alignEnd="@+id/buttonTwoPlayers" />
+        android:layout_alignEnd="@+id/buttonTwoPlayers"
+        android:onClick="onButtonOnePlayerClick" />
 
     <Button
         android:layout_width="wrap_content"
@@ -26,5 +27,6 @@
         android:text="@string/two_players"
         android:id="@+id/buttonTwoPlayers"
         android:layout_below="@+id/buttonOnePlayer"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="onButtonTwoPlayersClick" />
 </RelativeLayout>
