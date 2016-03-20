@@ -12,14 +12,16 @@ import edu.utep.cs.cs4330.hw3.omok.R;
 
 public class TwoPlayersActivity extends AppCompatActivity {
     private ViewPager viewPager;
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_two_players);
+        fragmentManager = getSupportFragmentManager();
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             viewPager = (ViewPager) findViewById(R.id.pager);
-            viewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
+            viewPager.setAdapter(new MyAdapter(fragmentManager));
         }
     }
 

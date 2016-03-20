@@ -18,14 +18,16 @@ import edu.utep.cs.cs4330.hw3.omok.model.OmokGame;
 
 public class OnePlayerActivity extends AppCompatActivity {
     private ViewPager viewPager;
+    private FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_one_player);
+        fragmentManager = getSupportFragmentManager();
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             viewPager = (ViewPager) findViewById(R.id.pager);
-            viewPager.setAdapter(new MyAdapter(getSupportFragmentManager()));
+            viewPager.setAdapter(new MyAdapter(fragmentManager));
         }
     }
 
