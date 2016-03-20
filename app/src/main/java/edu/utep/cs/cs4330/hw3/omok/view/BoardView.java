@@ -2,9 +2,13 @@ package edu.utep.cs.cs4330.hw3.omok.view;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
+
+import edu.utep.cs.cs4330.hw3.omok.R;
 
 /**
  * Created by lucasassisrodrigues on 3/15/16.
@@ -26,8 +30,8 @@ public class BoardView extends View {
      * that were specified in the XML file. This version uses a default style of
      * 0, so the only attribute values applied are those in the Context's Theme
      * and the given AttributeSet.
-     * <p/>
-     * <p/>
+     * <p>
+     * <p>
      * The method onFinishInflate() will be called after all children have been
      * added.
      *
@@ -65,7 +69,7 @@ public class BoardView extends View {
      * Perform inflation from XML and apply a class-specific base style from a
      * theme attribute or style resource. This constructor of View allows
      * subclasses to use their own base style when they are inflating.
-     * <p/>
+     * <p>
      * When determining the final value of a particular attribute, there are
      * four inputs that come into play:
      * <ol>
@@ -75,7 +79,7 @@ public class BoardView extends View {
      * <li>The default style specified by <var>defStyleRes</var>.
      * <li>The base values in this theme.
      * </ol>
-     * <p/>
+     * <p>
      * Each of these inputs is considered in-order, with the first listed taking
      * precedence over the following ones. In other words, if in the
      * AttributeSet you have supplied <code>&lt;Button * textColor="#ff000000"&gt;</code>
@@ -98,4 +102,35 @@ public class BoardView extends View {
     public BoardView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        Paint paintLine = new Paint();
+        Paint paintPlayerOne = new Paint();
+        Paint paintPlayerTwo = new Paint();
+        Paint paintWinner = new Paint();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            setBackgroundColor(getResources().getColor(R.color.colorBoard, null));
+            paintLine.setColor(getResources().getColor(R.color.colorLines, null));
+            paintPlayerOne.setColor(getResources().getColor(R.color.colorPlayerOne, null));
+            paintPlayerTwo.setColor(getResources().getColor(R.color.colorPlayerTwo, null));
+            paintWinner.setColor(getResources().getColor(R.color.colorWinner, null));
+        } else {
+            setBackgroundColor(getResources().getColor(R.color.colorBoard));
+            paintLine.setColor(getResources().getColor(R.color.colorLines));
+            paintPlayerOne.setColor(getResources().getColor(R.color.colorPlayerOne));
+            paintPlayerTwo.setColor(getResources().getColor(R.color.colorPlayerTwo));
+            paintWinner.setColor(getResources().getColor(R.color.colorWinner));
+        }
+        paintLine.setStrokeWidth(10);
+        for (int i = 0; i <= getWidth(); i += getWidth() / 9) {
+            canvas.drawLine(i, 0, i, getHeight(), paintLine);
+        }
+        for (int i = 0; i <= getHeight(); i += getHeight() / 9) {
+            canvas.drawLine(0, i, getWidth(), i, paintLine);
+        }
+    }
+
 }

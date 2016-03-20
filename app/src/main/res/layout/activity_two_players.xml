@@ -7,20 +7,11 @@
     android:fitsSystemWindows="true"
     tools:context="edu.utep.cs.cs4330.hw3.omok.control.TwoPlayersActivity">
 
-    <android.support.design.widget.AppBarLayout
+    <android.support.v4.view.ViewPager
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
-
-    </android.support.design.widget.AppBarLayout>
-
-    <include layout="@layout/content_two_players" />
+        android:layout_height="match_parent" />
+  <!--  <include layout="@layout/content_two_players" />-->
 
 </android.support.design.widget.CoordinatorLayout>

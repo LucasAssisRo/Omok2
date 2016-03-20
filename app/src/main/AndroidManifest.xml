@@ -19,7 +19,7 @@
             android:name=".control.OnePlayerActivity"
             android:label="@string/title_activity_one_player"
             android:parentActivityName=".control.MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.utep.cs.cs4330.hw3.omok.control.MainActivity" />
@@ -27,7 +27,7 @@
         <activity
             android:name=".control.TwoPlayersActivity"
             android:label="@string/title_activity_two_players"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.utep.cs.cs4330.hw3.omok.control.MainActivity" />
