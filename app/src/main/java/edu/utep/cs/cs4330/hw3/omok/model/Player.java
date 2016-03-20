@@ -1,10 +1,20 @@
 package edu.utep.cs.cs4330.hw3.omok.model;
 
-/**
- * Created by lucasassisrodrigues on 3/15/16.
- */
 public abstract class Player {
-   private boolean playerOne;
+    private char stone;
+    private boolean playerOne;
+
+    public Player() {
+    }
+
+    public Player(boolean playerOne) {
+        this.playerOne = playerOne;
+        if (this.playerOne) {
+            stone = 'B';
+        } else {
+            stone = 'W';
+        }
+    }
 
     public boolean isPlayerOne() {
         return playerOne;
@@ -12,5 +22,13 @@ public abstract class Player {
 
     public void setPlayerOne(boolean playerOne) {
         this.playerOne = playerOne;
+    }
+
+    public char getStone() {
+        return stone;
+    }
+
+    public void setStone(char stone) {
+        this.stone = stone;
     }
 }
