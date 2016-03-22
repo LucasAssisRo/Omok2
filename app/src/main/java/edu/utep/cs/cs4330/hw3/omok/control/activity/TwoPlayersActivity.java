@@ -1,39 +1,35 @@
-package edu.utep.cs.cs4330.hw3.omok.control;
+package edu.utep.cs.cs4330.hw3.omok.control.activity;
 
-import android.app.Activity;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import edu.utep.cs.cs4330.hw3.omok.R;
-import edu.utep.cs.cs4330.hw3.omok.model.OmokGame;
+import edu.utep.cs.cs4330.hw3.omok.control.fragment.GameFragment;
+import edu.utep.cs.cs4330.hw3.omok.control.fragment.TwoPlayersActivityFragment;
 
-public class OnePlayerActivity extends AppCompatActivity {
-    private ViewPager viewPager;
-    private FragmentManager fragmentManager;
+public class TwoPlayersActivity extends GameActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_one_player);
-        fragmentManager = getSupportFragmentManager();
+    }
+
+    @Override
+    protected void assignLayout(Bundle savedInstanceState) {
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             viewPager = (ViewPager) findViewById(R.id.pager);
-            viewPager.setAdapter(new MyAdapter(fragmentManager));
+            viewPager.setAdapter(new TwoPlayersFragmentAdapter(getSupportFragmentManager()));
+        }else{
+            setContentView(R.layout.activity_two_players);
         }
     }
 
-    class MyAdapter extends FragmentPagerAdapter {
+    class TwoPlayersFragmentAdapter extends GameFragmentAdapter {
 
-        public MyAdapter(FragmentManager fm) {
+        public TwoPlayersFragmentAdapter(FragmentManager fm) {
             super(fm);
             // TODO Auto-generated constructor stub
         }
@@ -48,11 +44,6 @@ public class OnePlayerActivity extends AppCompatActivity {
                 fragment = new GameFragment();
             }
             return fragment;
-        }
-
-        @Override
-        public int getCount() {
-            return 2;
         }
 
     }

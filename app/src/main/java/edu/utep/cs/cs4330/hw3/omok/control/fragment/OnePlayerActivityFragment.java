@@ -1,7 +1,7 @@
-package edu.utep.cs.cs4330.hw3.omok.control;
+package edu.utep.cs.cs4330.hw3.omok.control.fragment;
 
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

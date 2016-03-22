@@ -2,11 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.utep.cs.cs4330.hw3.omok.control.GameFragment"
-    android:padding="10dp" >
+    android:padding="10dp"
+    tools:context=".control.fragment.GameFragment">
 
     <edu.utep.cs.cs4330.hw3.omok.view.BoardView
-        android:id="@+id/view"
+        android:id="@+id/board_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

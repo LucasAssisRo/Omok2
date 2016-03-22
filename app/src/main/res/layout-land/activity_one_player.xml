@@ -6,7 +6,7 @@
     android:orientation="horizontal">
 
     <fragment
-        class="edu.utep.cs.cs4330.hw3.omok.control.OnePlayerActivityFragment"
+        class="edu.utep.cs.cs4330.hw3.omok.control.fragment.OnePlayerActivityFragment"
         tools:layout="@layout/fragment_one_player"
         android:id="@+id/fragment_one_player"
         android:layout_width="300dp"
@@ -14,7 +14,7 @@
         android:layout_weight="0" />
 
     <fragment
-        class="edu.utep.cs.cs4330.hw3.omok.control.GameFragment"
+        class="edu.utep.cs.cs4330.hw3.omok.control.fragment.GameFragment"
         tools:layout="@layout/fragment_game"
         android:id="@+id/fragment_game"
         android:layout_width="0dp"
