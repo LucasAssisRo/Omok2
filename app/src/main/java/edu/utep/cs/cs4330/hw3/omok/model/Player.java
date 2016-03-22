@@ -1,6 +1,6 @@
 package edu.utep.cs.cs4330.hw3.omok.model;
 
-public class Player {
+public abstract class Player {
     private char stone;
     private boolean playerOne;
     
