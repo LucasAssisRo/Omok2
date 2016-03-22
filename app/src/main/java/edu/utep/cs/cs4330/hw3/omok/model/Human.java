@@ -8,11 +8,15 @@ public class Human extends Player {
     private int lossCount;
     private String name;
 
-    public void addWin(){
+    public Human(boolean playerOne) {
+        super(playerOne);
+    }
+
+    public void addWin() {
         winCount++;
     }
 
-    public void addLoss(){
+    public void addLoss() {
         lossCount++;
     }
 

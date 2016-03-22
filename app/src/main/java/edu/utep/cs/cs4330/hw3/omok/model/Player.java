@@ -4,9 +4,6 @@ public abstract class Player {
     private char stone;
     private boolean playerOne;
 
-    public Player() {
-    }
-
     public Player(boolean playerOne) {
         this.playerOne = playerOne;
         if (this.playerOne) {

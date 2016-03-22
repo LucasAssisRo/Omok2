@@ -14,6 +14,7 @@
     <string name="new_game">New Game</string>
     <string name="new_game_prompt">Are you sure you want to start a new game?</string>
     <string name="win_message">&#160;wins!!!!</string>
+    <string name="loss_message">You lost!!!!</string>
     <string name="wins_colon">Wins:</string>
     <string name="losses_colon">Losses:</string>
     <string name="zero">0</string>

@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 
 import edu.utep.cs.cs4330.hw3.omok.R;
 import edu.utep.cs.cs4330.hw3.omok.control.fragment.GameFragment;
+import edu.utep.cs.cs4330.hw3.omok.model.OmokGame;
 import edu.utep.cs.cs4330.hw3.omok.view.BoardView;
 
 /**
@@ -26,6 +27,7 @@ import edu.utep.cs.cs4330.hw3.omok.view.BoardView;
  */
 public abstract class GameActivity extends AppCompatActivity {
     protected ViewPager viewPager;
+    protected OmokGame omokGame;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,8 @@ public abstract class GameActivity extends AppCompatActivity {
     }
 
     protected abstract void assignLayout(Bundle savedInstanceState);
+
+    protected abstract void startGame();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -132,6 +136,14 @@ public abstract class GameActivity extends AppCompatActivity {
         builder.setTitle(R.string.pick_color).setItems(arrayID, listener);
         alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    public OmokGame getOmokGame() {
+        return omokGame;
+    }
+
+    public void setOmokGame(OmokGame omokGame) {
+        this.omokGame = omokGame;
     }
 
     abstract class GameFragmentAdapter extends FragmentPagerAdapter {

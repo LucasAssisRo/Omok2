@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import edu.utep.cs.cs4330.hw3.omok.R;
+import edu.utep.cs.cs4330.hw3.omok.model.Board;
 
 /**
  * Created by lucasassisrodrigues on 3/15/16.
@@ -18,6 +19,7 @@ public class BoardView extends View {
     private int playerTwoColorID = R.color.white;
     private int lineColorID = R.color.black;
     private int backgroundColorID = R.color.beige;
+    private char[][] board = new char[10][10];
 
     /**
      * Simple constructor to use when creating a view from code.
@@ -35,8 +37,8 @@ public class BoardView extends View {
      * that were specified in the XML file. This version uses a default style of
      * 0, so the only attribute values applied are those in the Context's Theme
      * and the given AttributeSet.
-     * <p/>
-     * <p/>
+     * <p>
+     * <p>
      * The method onFinishInflate() will be called after all children have been
      * added.
      *
@@ -74,7 +76,7 @@ public class BoardView extends View {
      * Perform inflation from XML and apply a class-specific base style from a
      * theme attribute or style resource. This constructor of View allows
      * subclasses to use their own base style when they are inflating.
-     * <p/>
+     * <p>
      * When determining the final value of a particular attribute, there are
      * four inputs that come into play:
      * <ol>
@@ -84,7 +86,7 @@ public class BoardView extends View {
      * <li>The default style specified by <var>defStyleRes</var>.
      * <li>The base values in this theme.
      * </ol>
-     * <p/>
+     * <p>
      * Each of these inputs is considered in-order, with the first listed taking
      * precedence over the following ones. In other words, if in the
      * AttributeSet you have supplied <code>&lt;Button * textColor="#ff000000"&gt;</code>
@@ -136,6 +138,20 @@ public class BoardView extends View {
         for (int i = 0; i <= getHeight(); i += getHeight() / 9) {
             canvas.drawLine(0, i, getWidth(), i, paintLine);
         }
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                char c = board[i][j];
+                if (c == 'B') {
+                    canvas.drawCircle(i * getWidth() / 9, j * getHeight() / 9, 20, paintPlayerOne);
+                }
+                if (c == 'W') {
+                    canvas.drawCircle(i * getWidth() / 9, j * getHeight() / 9, 20, paintPlayerTwo);
+                }
+                if (c == '!') {
+                    canvas.drawCircle(i * getWidth() / 9, j * getHeight() / 9, 20, paintWinner);
+                }
+            }
+        }
     }
 
     public int getPlayerOneColorID() {
@@ -172,5 +188,9 @@ public class BoardView extends View {
     public void setBackgroundColorID(int backgroundColorID) {
         this.backgroundColorID = backgroundColorID;
         invalidate();
+    }
+
+    public void updateBoard(char board[][]) {
+        this.board = board;
     }
 }
