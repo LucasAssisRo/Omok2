@@ -59,17 +59,33 @@ public class StrategySmart implements Strategy{
         return false;
     }
 
-    public boolean south(int x, int y){
+    public boolean verifySouth(int x, int y){
 
-        if((x+1) <10){
-            coordinates.setX(x + 1);
+        if((y+1) <10){
+            coordinates.setX(x);
             coordinates.setY(y+1);
             return true;
         }
 
-        if((x-1) >-1){
-            coordinates.setX(x-1);
-            coordinates.setY(y);
+        if((y-1) >-1){
+            coordinates.setX(x);
+            coordinates.setY(y - 1);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean verifySouthWest(int x, int y){
+
+        if((y+1) <10){
+            coordinates.setX(x);
+            coordinates.setY(y+1);
+            return true;
+        }
+
+        if((y-1) >-1){
+            coordinates.setX(x);
+            coordinates.setY(y - 1);
             return true;
         }
         return false;
