@@ -24,6 +24,7 @@ public class OnePlayerActivity extends GameActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         omokGame = new OmokGame(true);
+        ((Human)omokGame.getPlayers()[0]).setName(getResources().getString(R.string.player_one));
     }
 
     @Override
@@ -44,7 +45,7 @@ public class OnePlayerActivity extends GameActivity {
             public void onClick(DialogInterface dialog, int id) {
                 OnePlayerFragment settingsFragment = findOnePlayerFragment();
                 GameFragment gameFragment = findGameFragment();
-                ((Human) omokGame.getPlayers()[0]).setName(settingsFragment.getEditTextPlayerOne().getText().toString());
+                ((Human) omokGame.getPlayers()[0]).setName(settingsFragment.getEditTextPlayerOneName().getText().toString());
                 if (settingsFragment.getRadioButtonRandom().isSelected())
                     ((Computer) omokGame.getPlayers()[1]).setStrategyMode(new StrategyRandom());
                 else

@@ -8,12 +8,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import edu.utep.cs.cs4330.hw3.omok.R;
 import edu.utep.cs.cs4330.hw3.omok.control.activity.GameActivity;
 import edu.utep.cs.cs4330.hw3.omok.control.activity.OnePlayerActivity;
 import edu.utep.cs.cs4330.hw3.omok.model.Computer;
+import edu.utep.cs.cs4330.hw3.omok.model.Human;
 import edu.utep.cs.cs4330.hw3.omok.model.StrategyRandom;
 import edu.utep.cs.cs4330.hw3.omok.model.StrategySmart;
 
@@ -21,7 +22,7 @@ import edu.utep.cs.cs4330.hw3.omok.model.StrategySmart;
  * A placeholder fragment containing a simple view.
  */
 public class OnePlayerFragment extends Fragment {
-    private EditText editTextPlayerOne;
+    private EditText editTextPlayerOneName;
     private RadioButton radioButtonRandom;
     private RadioButton radioButtonSmart;
     private Button buttonNewGame;
@@ -33,7 +34,7 @@ public class OnePlayerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_one_player, container, false);
-        editTextPlayerOne = (EditText) view.findViewById(R.id.editTextPlayerOneName);
+        editTextPlayerOneName = (EditText) view.findViewById(R.id.editTextPlayerOneName);
         radioButtonRandom = (RadioButton) view.findViewById(R.id.radioButtonRandom);
         radioButtonRandom.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +53,8 @@ public class OnePlayerFragment extends Fragment {
         buttonNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((OnePlayerActivity)getActivity()).startGame();
+                ((OnePlayerActivity) getActivity()).startGame();
+                editTextPlayerOneName.setFocusable(false);
             }
         });
         return view;
@@ -81,13 +83,17 @@ public class OnePlayerFragment extends Fragment {
         super.onResume();
         if(((Computer) ((GameActivity) getActivity()).
                 getOmokGame().getPlayers()[1]).getStrategyMode() instanceof StrategyRandom)
-            radioButtonRandom.setSelected(true);
+            radioButtonRandom.setChecked(true);
         else
-            radioButtonSmart.setSelected(true);
+            radioButtonSmart.setChecked(true);
+        editTextPlayerOneName.setText(((Human)(((GameActivity) getActivity()).getOmokGame().getPlayers()[0])).getName());
+        if(((GameActivity) getActivity()).getOmokGame().isGameRunning()){
+            editTextPlayerOneName.setFocusable(false);
+        }
     }
 
-    public EditText getEditTextPlayerOne() {
-        return editTextPlayerOne;
+    public EditText getEditTextPlayerOneName() {
+        return editTextPlayerOneName;
     }
 
     public RadioButton getRadioButtonRandom() {

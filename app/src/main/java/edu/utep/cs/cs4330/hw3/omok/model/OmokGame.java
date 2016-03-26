@@ -7,7 +7,7 @@ import android.util.Log;
 /**
  * Created by lucasassisrodrigues on 3/15/16.
  */
-public class OmokGame implements Parcelable{
+public class OmokGame implements Parcelable {
 
     private Board board;
     private Player[] players;
@@ -90,6 +90,11 @@ public class OmokGame implements Parcelable{
 
     public Player getCurrentPlayer() {
         return players[turn];
+    }
+
+    public Player getNextPlayer() {
+        if (turn == 0) return players[1];
+        else return players[0];
     }
 
     public void setTurn(int turn) {

@@ -54,18 +54,24 @@ public class GameFragment extends Fragment {
                         y++;
                     }
                     Coordinates playCoordinates;
-                    Player player = omokGame.getCurrentPlayer();
-                    if (player instanceof Computer)
+                    Player currentPlayer = omokGame.getCurrentPlayer();
+                    Player nextPlayer = omokGame.getNextPlayer();
+                    if (currentPlayer instanceof Computer)
                         playCoordinates = ((Computer) omokGame.getCurrentPlayer()).findCoordinates(omokGame.getBoard().getBoard());
                     else
                         playCoordinates = new Coordinates(x, y);
                     if (omokGame.placeStone(playCoordinates)) {
                         boardView.invalidate();
                         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                        if (player instanceof Human)
-                            builder.setMessage(((Human) player).getName() + getResources().getString(R.string.win_message));
-                        else
+                        if (currentPlayer instanceof Human) {
+                            builder.setMessage(((Human) currentPlayer).getName() + getResources().getString(R.string.win_message));
+                            ((Human) currentPlayer).addWin();
+                            if (nextPlayer instanceof Human)
+                                ((Human) nextPlayer).addLoss();
+                        } else {
                             builder.setMessage(getResources().getString(R.string.loss_message));
+                            ((Human) omokGame.getPlayers()[0]).addLoss();
+                        }
                         AlertDialog dialog = builder.create();
                         dialog.show();
                     }

@@ -10,7 +10,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import edu.utep.cs.cs4330.hw3.omok.R;
+import edu.utep.cs.cs4330.hw3.omok.control.activity.GameActivity;
 import edu.utep.cs.cs4330.hw3.omok.control.activity.TwoPlayersActivity;
+import edu.utep.cs.cs4330.hw3.omok.model.Human;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -33,10 +35,23 @@ public class TwoPlayersFragment extends Fragment {
         buttonNewGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((TwoPlayersActivity)getActivity()).startGame();
+                ((TwoPlayersActivity) getActivity()).startGame();
+                editTextPlayerOne.setFocusable(false);
+                editTextPlayerTwo.setFocusable(false);
             }
         });
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        editTextPlayerOne.setText(((Human) (((GameActivity) getActivity()).getOmokGame().getPlayers()[0])).getName());
+        editTextPlayerTwo.setText(((Human) (((GameActivity) getActivity()).getOmokGame().getPlayers()[1])).getName());
+        if(((GameActivity) getActivity()).getOmokGame().isGameRunning()){
+            editTextPlayerOne.setFocusable(false);
+            editTextPlayerTwo.setFocusable(false);
+        }
     }
 
     public EditText getEditTextPlayerOne() {

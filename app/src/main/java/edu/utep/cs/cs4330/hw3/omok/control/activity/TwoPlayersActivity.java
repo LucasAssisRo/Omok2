@@ -23,6 +23,8 @@ public class TwoPlayersActivity extends GameActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         omokGame = new OmokGame(false);
+        ((Human)omokGame.getPlayers()[0]).setName(getResources().getString(R.string.player_one));
+        ((Human)omokGame.getPlayers()[1]).setName(getResources().getString(R.string.player_two));
     }
 
     @Override

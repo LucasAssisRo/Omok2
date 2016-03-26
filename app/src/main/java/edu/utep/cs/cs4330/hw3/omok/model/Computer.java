@@ -11,6 +11,7 @@ public class Computer extends Player {
 
     public Computer(boolean playerOne) {
         super(playerOne);
+        strategyMode = new StrategyRandom();
     }
 
     public Computer(Parcel in) {
