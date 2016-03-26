@@ -12,6 +12,7 @@ import android.widget.RadioGroup;
 
 import edu.utep.cs.cs4330.hw3.omok.R;
 import edu.utep.cs.cs4330.hw3.omok.control.activity.GameActivity;
+import edu.utep.cs.cs4330.hw3.omok.control.activity.OnePlayerActivity;
 import edu.utep.cs.cs4330.hw3.omok.model.Computer;
 import edu.utep.cs.cs4330.hw3.omok.model.StrategyRandom;
 import edu.utep.cs.cs4330.hw3.omok.model.StrategySmart;
@@ -19,13 +20,13 @@ import edu.utep.cs.cs4330.hw3.omok.model.StrategySmart;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class OnePlayerActivityFragment extends Fragment {
+public class OnePlayerFragment extends Fragment {
     private EditText editTextPlayerOne;
     private RadioButton radioButtonRandom;
     private RadioButton radioButtonSmart;
     private Button buttonNewGame;
 
-    public OnePlayerActivityFragment() {
+    public OnePlayerFragment() {
     }
 
     @Override
@@ -48,6 +49,12 @@ public class OnePlayerActivityFragment extends Fragment {
             }
         });
         buttonNewGame = (Button) view.findViewById(R.id.buttonNewGame);
+        buttonNewGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((OnePlayerActivity)getActivity()).startGame();
+            }
+        });
         return view;
     }
 
@@ -67,6 +74,16 @@ public class OnePlayerActivityFragment extends Fragment {
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(((Computer) ((GameActivity) getActivity()).
+                getOmokGame().getPlayers()[1]).getStrategyMode() instanceof StrategyRandom)
+            radioButtonRandom.setSelected(true);
+        else
+            radioButtonSmart.setSelected(true);
     }
 
     public EditText getEditTextPlayerOne() {

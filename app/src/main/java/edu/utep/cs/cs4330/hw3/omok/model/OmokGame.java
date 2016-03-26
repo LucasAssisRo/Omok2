@@ -1,16 +1,17 @@
 package edu.utep.cs.cs4330.hw3.omok.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 /**
  * Created by lucasassisrodrigues on 3/15/16.
  */
-public class OmokGame {
+public class OmokGame implements Parcelable{
 
     private Board board;
     private Player[] players;
     private int turn;
-    private boolean winner;
     private boolean gameRunning = false;
 
 
@@ -18,7 +19,6 @@ public class OmokGame {
         board = new Board();
         players = new Player[2];
         turn = 0;
-        winner = false;
     }
 
     public OmokGame(boolean strategyMode) {
@@ -26,21 +26,41 @@ public class OmokGame {
         players = new Player[2];
         gameMode(strategyMode);
         turn = 0;
-        winner = false;
     }
+
+    protected OmokGame(Parcel in) {
+        board = in.readParcelable(Board.class.getClassLoader());
+        players[0] = in.readParcelable(Player.class.getClassLoader());
+        players[1] = in.readParcelable(Player.class.getClassLoader());
+        turn = in.readInt();
+        gameRunning = in.readByte() != 0;
+    }
+
+    public static final Creator<OmokGame> CREATOR = new Creator<OmokGame>() {
+        @Override
+        public OmokGame createFromParcel(Parcel in) {
+            return new OmokGame(in);
+        }
+
+        @Override
+        public OmokGame[] newArray(int size) {
+            return new OmokGame[size];
+        }
+    };
 
     public void gameMode(boolean strategyMode) {
         players[0] = new Human(true);
-        players[1] = strategyMode ? new Computer(false) : new Human(true);
+        players[1] = strategyMode ? new Computer(false) : new Human(false);
     }
 
-    public void placeStone(Coordinates coordinates) {
-        Log.i("click", board.checkWinner(players[turn], coordinates) + "");
-        if (board.placeStone(players[turn], coordinates))
-            if (!board.checkWinner(players[turn], coordinates))
-                flipTurn();
-            else
-                gameRunning = false;
+    public boolean placeStone(Coordinates coordinates) {
+        int current = turn;
+        boolean winState = false;
+        if (board.placeStone(players[current], coordinates))
+            flipTurn();
+        winState = board.checkWinner(players[current], coordinates);
+        gameRunning = !winState;
+        return winState;
     }
 
     private void flipTurn() {
@@ -51,9 +71,6 @@ public class OmokGame {
         return turn;
     }
 
-    public boolean isWinner() {
-        return winner;
-    }
 
     public Board getBoard() {
         return board;
@@ -79,15 +96,39 @@ public class OmokGame {
         this.turn = turn;
     }
 
-    public void setWinner(boolean winner) {
-        this.winner = winner;
-    }
-
     public boolean isGameRunning() {
         return gameRunning;
     }
 
     public void setGameRunning(boolean gameRunning) {
         this.gameRunning = gameRunning;
+    }
+
+    /**
+     * Describe the kinds of special objects contained in this Parcelable's
+     * marshalled representation.
+     *
+     * @return a bitmask indicating the set of special object types marshalled
+     * by the Parcelable.
+     */
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /**
+     * Flatten this object in to a Parcel.
+     *
+     * @param dest  The Parcel in which the object should be written.
+     * @param flags Additional flags about how the object should be written.
+     *              May be 0 or {@link #PARCELABLE_WRITE_RETURN_VALUE}.
+     */
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(board, flags);
+        dest.writeParcelable(players[0], flags);
+        dest.writeParcelable(players[1], flags);
+        dest.writeInt(turn);
+        dest.writeByte((byte) (gameRunning ? 1 : 0));
     }
 }

@@ -1,7 +1,10 @@
 package edu.utep.cs.cs4330.hw3.omok.model;
 
 
-public class Board {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Board implements Parcelable {
     private final int BOARDSIZE = 10;
     private char board[][];
     private boolean winner = false;
@@ -14,6 +17,27 @@ public class Board {
             }
         }
     }
+
+    protected Board(Parcel in) {
+        winner = in.readByte() != 0;
+        for (int i = 0; i < BOARDSIZE; i++) {
+            for (int j = 0; j < BOARDSIZE; j++) {
+                board[i][j] = (char) in.readInt();
+            }
+        }
+    }
+
+    public static final Creator<Board> CREATOR = new Creator<Board>() {
+        @Override
+        public Board createFromParcel(Parcel in) {
+            return new Board(in);
+        }
+
+        @Override
+        public Board[] newArray(int size) {
+            return new Board[size];
+        }
+    };
 
     public boolean placeStone(Player player, Coordinates coordinates) {
         if (board[coordinates.getX()][coordinates.getY()] == ' ') {
@@ -228,5 +252,34 @@ public class Board {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Describe the kinds of special objects contained in this Parcelable's
+     * marshalled representation.
+     *
+     * @return a bitmask indicating the set of special object types marshalled
+     * by the Parcelable.
+     */
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    /**
+     * Flatten this object in to a Parcel.
+     *
+     * @param dest  The Parcel in which the object should be written.
+     * @param flags Additional flags about how the object should be written.
+     *              May be 0 or {@link #PARCELABLE_WRITE_RETURN_VALUE}.
+     */
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte((byte) (winner ? 1 : 0));
+        for (int i = 0; i < BOARDSIZE; i++) {
+            for (int j = 0; j < BOARDSIZE; j++) {
+                dest.writeInt(board[i][j]);
+            }
+        }
     }
 }

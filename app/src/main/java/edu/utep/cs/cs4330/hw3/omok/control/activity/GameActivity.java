@@ -1,7 +1,6 @@
 package edu.utep.cs.cs4330.hw3.omok.control.activity;
 
 import android.content.res.Configuration;
-import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -20,7 +19,6 @@ import android.view.ViewGroup;
 import edu.utep.cs.cs4330.hw3.omok.R;
 import edu.utep.cs.cs4330.hw3.omok.control.fragment.GameFragment;
 import edu.utep.cs.cs4330.hw3.omok.model.OmokGame;
-import edu.utep.cs.cs4330.hw3.omok.view.BoardView;
 
 /**
  * Created by lucasassisrodrigues on 3/21/16.
@@ -36,9 +34,21 @@ public abstract class GameActivity extends AppCompatActivity {
         assignLayout(savedInstanceState);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("game", omokGame);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        omokGame = savedInstanceState.getParcelable("game");
+    }
+
     protected abstract void assignLayout(Bundle savedInstanceState);
 
-    protected abstract void startGame();
+    public abstract void startGame();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -50,12 +60,7 @@ public abstract class GameActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        final GameFragment gameFragment;
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            gameFragment = (GameFragment) ((GameFragmentAdapter) viewPager.getAdapter()).getRegisteredFragment(1);
-        } else {
-            gameFragment = (GameFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_game);
-        }
+        final GameFragment gameFragment = findGameFragment();
         switch (id) {
             case R.id.action_player_one_color:
                 createDialog(R.array.player_colors, new DialogInterface.OnClickListener() {
@@ -128,6 +133,14 @@ public abstract class GameActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    protected GameFragment findGameFragment() {
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            return (GameFragment) ((GameFragmentAdapter) viewPager.getAdapter()).getRegisteredFragment(1);
+        } else {
+            return (GameFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_game);
+        }
     }
 
     private void createDialog(int arrayID, DialogInterface.OnClickListener listener) {

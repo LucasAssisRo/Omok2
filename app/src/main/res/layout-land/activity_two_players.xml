@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
     <fragment
-        class="edu.utep.cs.cs4330.hw3.omok.control.fragment.TwoPlayersActivityFragment"
+        class="edu.utep.cs.cs4330.hw3.omok.control.fragment.TwoPlayersFragment"
         tools:layout="@layout/fragment_two_players"
         android:id="@+id/fragment_two_players"
         android:layout_width="300dp"

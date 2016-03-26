@@ -2,6 +2,7 @@ package edu.utep.cs.cs4330.hw3.omok.control.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +15,12 @@ import edu.utep.cs.cs4330.hw3.omok.control.activity.TwoPlayersActivity;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class TwoPlayersActivityFragment extends Fragment {
+public class TwoPlayersFragment extends Fragment {
     private EditText editTextPlayerOne;
     private EditText editTextPlayerTwo;
     private Button buttonNewGame;
 
-    public TwoPlayersActivityFragment() {
+    public TwoPlayersFragment() {
     }
 
     @Override

@@ -9,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import edu.utep.cs.cs4330.hw3.omok.R;
 import edu.utep.cs.cs4330.hw3.omok.control.activity.GameActivity;
 import edu.utep.cs.cs4330.hw3.omok.model.Board;
+import edu.utep.cs.cs4330.hw3.omok.model.Computer;
 import edu.utep.cs.cs4330.hw3.omok.model.Coordinates;
 import edu.utep.cs.cs4330.hw3.omok.model.Human;
 import edu.utep.cs.cs4330.hw3.omok.model.OmokGame;
@@ -21,6 +23,7 @@ import edu.utep.cs.cs4330.hw3.omok.view.BoardView;
 
 public class GameFragment extends Fragment {
     private BoardView boardView;
+    private TextView textViewTurn;
 
     public GameFragment() {
         // Required empty public constructor
@@ -31,6 +34,7 @@ public class GameFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_game, container, false);
+        textViewTurn = (TextView) v.findViewById(R.id.textViewTurn);
         boardView = (BoardView) v.findViewById(R.id.board_view);
         boardView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -49,11 +53,15 @@ public class GameFragment extends Fragment {
                     if (event.getY() % stepY > stepY / 2) {
                         y++;
                     }
-                    omokGame.placeStone(new Coordinates(x, y));
-                    if (!omokGame.isGameRunning()) {
+                    Coordinates playCoordinates;
+                    Player player = omokGame.getCurrentPlayer();
+                    if (player instanceof Computer)
+                        playCoordinates = ((Computer) omokGame.getCurrentPlayer()).findCoordinates(omokGame.getBoard().getBoard());
+                    else
+                        playCoordinates = new Coordinates(x, y);
+                    if (omokGame.placeStone(playCoordinates)) {
                         boardView.invalidate();
                         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                        Player player = omokGame.getCurrentPlayer();
                         if (player instanceof Human)
                             builder.setMessage(((Human) player).getName() + getResources().getString(R.string.win_message));
                         else
@@ -61,6 +69,10 @@ public class GameFragment extends Fragment {
                         AlertDialog dialog = builder.create();
                         dialog.show();
                     }
+                    if (omokGame.getTurn() == 0)
+                        textViewTurn.setText(R.string.player_one_turn);
+                    else
+                        textViewTurn.setText(R.string.player_two_turn);
                     boardView.updateBoard(omokGame.getBoard().getBoard());
                     boardView.invalidate();
                     return true;
@@ -69,6 +81,16 @@ public class GameFragment extends Fragment {
             }
         });
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        boardView.updateBoard(((GameActivity) getActivity()).getOmokGame().getBoard().getBoard());
+        if (((GameActivity) getActivity()).getOmokGame().getTurn() == 0)
+            textViewTurn.setText(R.string.player_one_turn);
+        else
+            textViewTurn.setText(R.string.player_two_turn);
     }
 
     public BoardView getBoardView() {

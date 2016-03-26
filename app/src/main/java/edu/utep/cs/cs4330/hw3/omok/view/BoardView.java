@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import edu.utep.cs.cs4330.hw3.omok.R;
+import edu.utep.cs.cs4330.hw3.omok.control.activity.GameActivity;
 import edu.utep.cs.cs4330.hw3.omok.model.Board;
 
 /**
@@ -116,22 +117,23 @@ public class BoardView extends View {
         Paint paintLine = new Paint();
         Paint paintPlayerOne = new Paint();
         Paint paintPlayerTwo = new Paint();
-        Paint paintWinner = new Paint();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             setBackgroundColor(getResources().getColor(backgroundColorID, null));
             paintLine.setColor(getResources().getColor(lineColorID, null));
             paintPlayerOne.setColor(getResources().getColor(playerOneColorID, null));
             paintPlayerTwo.setColor(getResources().getColor(playerTwoColorID, null));
-            paintWinner.setColor(getResources().getColor(R.color.red, null));
         } else {
             setBackgroundColor(getResources().getColor(backgroundColorID));
             paintLine.setColor(getResources().getColor(lineColorID));
             paintPlayerOne.setColor(getResources().getColor(playerOneColorID));
             paintPlayerTwo.setColor(getResources().getColor(playerTwoColorID));
-            paintWinner.setColor(getResources().getColor(R.color.red));
         }
         paintLine.setStrokeWidth(10);
+
+        int r;
+        r = getWidth() > getHeight() ? getHeight() / 25 : getWidth() / 25;
+
         for (int i = 0; i <= getWidth(); i += getWidth() / 9) {
             canvas.drawLine(i, 0, i, getHeight(), paintLine);
         }
@@ -141,14 +143,19 @@ public class BoardView extends View {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 char c = board[i][j];
+                if (c == 'b') {
+                    canvas.drawCircle(i * getWidth() / 9, j * getHeight() / 9, r, paintPlayerTwo);
+                    canvas.drawCircle(i * getWidth() / 9, j * getHeight() / 9, r - 10, paintPlayerOne);
+                }
+                if (c == 'w') {
+                    canvas.drawCircle(i * getWidth() / 9, j * getHeight() / 9, r, paintPlayerOne);
+                    canvas.drawCircle(i * getWidth() / 9, j * getHeight() / 9, r - 10, paintPlayerTwo);
+                }
                 if (c == 'B') {
-                    canvas.drawCircle(i * getWidth() / 9, j * getHeight() / 9, 20, paintPlayerOne);
+                    canvas.drawCircle(i * getWidth() / 9, j * getHeight() / 9, r, paintPlayerOne);
                 }
                 if (c == 'W') {
-                    canvas.drawCircle(i * getWidth() / 9, j * getHeight() / 9, 20, paintPlayerTwo);
-                }
-                if (c == '!') {
-                    canvas.drawCircle(i * getWidth() / 9, j * getHeight() / 9, 20, paintWinner);
+                    canvas.drawCircle(i * getWidth() / 9, j * getHeight() / 9, r, paintPlayerTwo);
                 }
             }
         }
@@ -192,5 +199,6 @@ public class BoardView extends View {
 
     public void updateBoard(char board[][]) {
         this.board = board;
+        invalidate();
     }
 }

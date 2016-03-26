@@ -24,6 +24,8 @@
     <string name="action_board_color">Board color</string>
     <string name="pick_color">Pick a color:</string>
     <string name="action_line_color">Line color</string>
+    <string name="player_one_turn">Player 1 turn</string>
+    <string name="player_two_turn">Player 2 turn</string>
 
     <string name="computer_settings">Computer Settings</string>
     <string name="random">Random</string>
