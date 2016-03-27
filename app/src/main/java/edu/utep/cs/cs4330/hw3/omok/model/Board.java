@@ -56,7 +56,7 @@ public class Board implements Parcelable {
         int west = west(coordinates.getX(), coordinates.getY(), player.getStone());
         int east = east(coordinates.getX(), coordinates.getX(), player.getStone());
         //        Log.i("Check east & west size", "East " + east + " West " + west);
-        if ((west + east) >= 6) {
+        if ((west + east) >= 5) {
             winner = true;
             return addWinningEastWest(east, west, coordinates.getX(), coordinates.getY(), player.getStone());
         }
@@ -168,8 +168,8 @@ public class Board implements Parcelable {
     * @Param int y the y position to start changing the string
     * @Param String player the player string to change to lowercase*/
     private boolean addWinningEastWest(int east, int west, int x, int y, char player) {
-        if (east > 0 & west > 0) {
-            if (east + west > 6)
+        if (east >= 0 & west >= 0) {
+            if (east + west > 5)
                 east--;
             for (int i = 0; i < west; i++) {
                 board[x - i][y] = Character.toLowerCase(board[x - i][y]);
@@ -192,7 +192,7 @@ public class Board implements Parcelable {
     * @Param int y the y position to start changing the string
     * @Param String player the player string to change to lowercase*/
     private boolean addWinningNorthSouth(int north, int south, int x, int y, char player) {
-        if (north > 0 & south > 0) {
+        if (north >= 0 & south >= 0) {
             if (north + south > 6)
                 north--;
             for (int i = 0; i < north; i++) {
@@ -216,7 +216,7 @@ public class Board implements Parcelable {
     * @Param int y the y position to start changing the string
     * @Param String player the player string to change to lowercase*/
     private boolean addWinningLeftDiagonal(int northWest, int southEast, int x, int y, char player) {
-        if (northWest > 0 & southEast > 0) {
+        if (northWest >= 0 & southEast >= 0) {
             if (northWest + southEast > 6)
                 northWest--;
             for (int i = 0; i < northWest; i++) {
