@@ -1,10 +1,12 @@
 package edu.utep.cs.cs4330.hw3.omok.control.fragment;
 
 
+import android.content.Context;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,7 +15,6 @@ import android.widget.TextView;
 
 import edu.utep.cs.cs4330.hw3.omok.R;
 import edu.utep.cs.cs4330.hw3.omok.control.activity.GameActivity;
-import edu.utep.cs.cs4330.hw3.omok.model.Board;
 import edu.utep.cs.cs4330.hw3.omok.model.Computer;
 import edu.utep.cs.cs4330.hw3.omok.model.Coordinates;
 import edu.utep.cs.cs4330.hw3.omok.model.Human;
@@ -24,7 +25,7 @@ import edu.utep.cs.cs4330.hw3.omok.view.BoardView;
 public class GameFragment extends Fragment {
     private BoardView boardView;
     private TextView textViewTurn;
-
+    private SoundPool soundPool;
     public GameFragment() {
         // Required empty public constructor
     }
@@ -34,6 +35,10 @@ public class GameFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_game, container, false);
+        soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 100);
+        soundPool.load(getContext(), R.raw.sound_placing_token, 1);
+        soundPool.load(getContext(),R.raw.sound_winning,2);
+        final AudioManager audioManager = (AudioManager)getContext().getSystemService(Context.AUDIO_SERVICE);
         textViewTurn = (TextView) v.findViewById(R.id.textViewTurn);
         boardView = (BoardView) v.findViewById(R.id.board_view);
         boardView.setOnTouchListener(new View.OnTouchListener() {
@@ -58,13 +63,30 @@ public class GameFragment extends Fragment {
                     Player nextPlayer = omokGame.getNextPlayer();
                     if (currentPlayer instanceof Computer)
                         playCoordinates = ((Computer) omokGame.getCurrentPlayer()).findCoordinates(omokGame.getBoard().getBoard());
-                    else
+                    else {
                         playCoordinates = new Coordinates(x, y);
+                        if (omokGame.checkValidPosition(playCoordinates)) {
+                            float curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                            float maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+                            float leftVolume = curVolume/maxVolume;
+                            float rightVolume = curVolume/maxVolume;
+                            int priority = 1;
+                            float normal_playback_rate = 1f;
+                            soundPool.play(1, leftVolume, rightVolume, priority, 0, normal_playback_rate);
+                        }
+                    }
                     if (omokGame.placeStone(playCoordinates)) {
                         boardView.invalidate();
                         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                         if (currentPlayer instanceof Human) {
                             builder.setMessage(((Human) currentPlayer).getName() + getResources().getString(R.string.win_message));
+                            float curVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                            float maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+                            float leftVolume = curVolume/maxVolume;
+                            float rightVolume = curVolume/maxVolume;
+                            int priority = 2;
+                            float normal_playback_rate = 1f;
+                            soundPool.play(2, leftVolume, rightVolume, priority, 0, normal_playback_rate);
                             ((Human) currentPlayer).addWin();
                             if (nextPlayer instanceof Human)
                                 ((Human) nextPlayer).addLoss();

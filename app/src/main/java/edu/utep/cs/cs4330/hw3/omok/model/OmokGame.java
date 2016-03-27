@@ -62,6 +62,9 @@ public class OmokGame implements Parcelable {
         gameRunning = !winState;
         return winState;
     }
+    public boolean checkValidPosition(Coordinates coordinates){
+        return board.getBoard()[coordinates.getX()][coordinates.getY()]==' ';
+    }
 
     private void flipTurn() {
         turn = (turn == 0) ? 1 : 0;

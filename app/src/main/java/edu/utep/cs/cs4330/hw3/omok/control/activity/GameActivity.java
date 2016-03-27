@@ -1,6 +1,7 @@
 package edu.utep.cs.cs4330.hw3.omok.control.activity;
 
 import android.content.res.Configuration;
+import android.media.MediaPlayer;
 import android.support.v4.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -26,11 +27,15 @@ import edu.utep.cs.cs4330.hw3.omok.model.OmokGame;
 public abstract class GameActivity extends AppCompatActivity {
     protected ViewPager viewPager;
     protected OmokGame omokGame;
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        mediaPlayer = MediaPlayer.create(this, R.raw.background_music);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.start();
         assignLayout(savedInstanceState);
     }
 
@@ -38,12 +43,16 @@ public abstract class GameActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putParcelable("game", omokGame);
+        outState.putBoolean("music",mediaPlayer.isPlaying());
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         omokGame = savedInstanceState.getParcelable("game");
+        if(!savedInstanceState.getBoolean("music")){
+            mediaPlayer.pause();
+        }
     }
 
     protected abstract void assignLayout(Bundle savedInstanceState);
@@ -129,6 +138,12 @@ public abstract class GameActivity extends AppCompatActivity {
                         }
                     }
                 });
+                break;
+            case R.id.action_background_music:
+                if (mediaPlayer.isPlaying())
+                    mediaPlayer.pause();
+                else
+                    mediaPlayer.start();
                 break;
         }
 
