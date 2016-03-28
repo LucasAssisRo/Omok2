@@ -18,6 +18,8 @@ public class StrategySmart implements Strategy{
             for(int y = 0; y<board.length;y++){
                 if(lookHorizontal(x,y, board))
                     return coordinates;
+                if(lookVertical(x, y, board))
+                    return coordinates;
                 if(lookSouthEast(x, y,board))
                     return coordinates;
                 if(lookSouthWest(x, y, board))

@@ -55,13 +55,11 @@ public class OmokGame implements Parcelable{
 
     public boolean placeStone(Coordinates coordinates) {
         int current = turn;
-        boolean winState = false;
-        if (board.placeStone(players[current], coordinates)) {
-            winState = board.checkWinner(players[current], coordinates);
-            if(winState)
-                gameRunning = !winState;
+        boolean winState;
+        if (board.placeStone(players[current], coordinates))
             flipTurn();
-        }
+        winState = board.checkWinner(players[current], coordinates);
+        gameRunning = !winState;
         //gameRunning = !winState;
         return winState;
     }
