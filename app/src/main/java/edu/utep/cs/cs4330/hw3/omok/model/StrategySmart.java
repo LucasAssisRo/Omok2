@@ -1,6 +1,7 @@
 package edu.utep.cs.cs4330.hw3.omok.model;
 
 import java.util.Random;
+import android.util.Log;
 
 /**
  * The class will look for a combination of 3 or 4 to block
@@ -73,7 +74,6 @@ public class StrategySmart implements Strategy{
 
         if((x+3) < board.length  && (y+3) < board.length ){
             if(board[x][y]== 'B' && board[x+1][y+1]=='B' && board[x+2][y+2]=='B'){
-
                 if((x-1) >= 0 && (y-1) >= 0){
                     if(board[x-1][y-1]==' '){
                         coordinates.setX(x-1);
@@ -81,8 +81,8 @@ public class StrategySmart implements Strategy{
                         return true;
                     }
                 }
-                if((x+2) < board.length && (y+2) < board.length){
-                    if(board[x+3][x+3]==' '){
+                if((x+3) < board.length && (y+3) < board.length){
+                    if(board[x+3][y+3]==' '){
                         coordinates.setX(x+3);
                         coordinates.setY(y+3);
                         return true;
