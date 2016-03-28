@@ -54,9 +54,9 @@ public class Board implements Parcelable {
     public boolean checkWinner(Player player, Coordinates coordinates) {
         //if Horizontal Win
         int west = west(coordinates.getX(), coordinates.getY(), player.getStone());
-        int east = east(coordinates.getX(), coordinates.getX(), player.getStone());
+        int east = east(coordinates.getX(), coordinates.getY(), player.getStone());
         //        Log.i("Check east & west size", "East " + east + " West " + west);
-        if ((west + east) >= 5) {
+        if ((west + east) >= 6) {
             winner = true;
             return addWinningEastWest(east, west, coordinates.getX(), coordinates.getY(), player.getStone());
         }
