@@ -3,15 +3,16 @@ package edu.utep.cs.cs4330.hw3.omok.model;
 import java.util.Random;
 
 /**
- * Created by lucasassisrodrigues on 3/15/16.
+ * The class will look for a combination of 3 or 4 to block
+ *
  */
 public class StrategySmart implements Strategy{
 
-    final private int BOARDSIZE = 10;
     Coordinates coordinates = new Coordinates();
 
     @Override
     public Coordinates findCoordinates(char[][]board) {
+        //itterate through the board to play defence
         for(int x= 0; x<board.length;x++){
             for(int y = 0; y<board.length;y++){
                 if(lookHorizontal(x,y, board))
@@ -27,9 +28,12 @@ public class StrategySmart implements Strategy{
         random(board);
         return coordinates;
     }
-
+    /*
+    * Look for any 3 or 4 in a row to block
+    * @param x coordinate
+    * @param y coordinate
+    * @param board a copy of the board*/
     private boolean lookSouthWest(int x, int y, char[][] board){
-
         if((x-3) >= 0 && (y+3) < board.length ){
             if(board[x][y]=='B' && board[x-1][y+1]=='B' && board[x-2][y+2]=='B'){
 
@@ -60,7 +64,11 @@ public class StrategySmart implements Strategy{
         }
         return false;
     }
-
+    /*
+    * Look for any 3 or 4 in a row to block
+    * @param x coordinate
+    * @param y coordinate
+    * @param board a copy of the board*/
     private boolean lookSouthEast(int x, int y, char[][] board){
 
         if((x+3) < board.length  && (y+3) < board.length ){
@@ -94,7 +102,11 @@ public class StrategySmart implements Strategy{
         return false;
     }
 
-
+    /*
+    * Look for any 3 or 4 in a row to block
+    * @param x coordinate
+    * @param y coordinate
+    * @param board a copy of the board*/
     private boolean lookHorizontal(int x, int y, char[][] board){
         if((x+3) < board.length){
             if(board[x][y]=='B' && board[x+1][y]=='B' && board[x+2][y]=='B'){
@@ -125,7 +137,11 @@ public class StrategySmart implements Strategy{
         }
         return false;
     }
-
+    /*
+    * Look for any 3 or 4 in a row to block
+    * @param x coordinate
+    * @param y coordinate
+    * @param board a copy of the board*/
     private boolean lookVertical(int x, int y, char[][] board){
 
         if((y+3) < board.length){
@@ -157,7 +173,9 @@ public class StrategySmart implements Strategy{
         }
         return false;
     }
-
+    /*
+    * else play random
+    * */
     private void random(char[][] board){
         Random random = new Random();
         int x = random.nextInt(board.length);

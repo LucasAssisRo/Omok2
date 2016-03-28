@@ -3,7 +3,8 @@ package edu.utep.cs.cs4330.hw3.omok.model;
 import java.util.Random;
 
 /**
- * Created by lucasassisrodrigues on 3/15/16.
+ * The random class will be generating random coordinates while
+ * they are not taken.
  */
 public class StrategyRandom implements Strategy {
     @Override
